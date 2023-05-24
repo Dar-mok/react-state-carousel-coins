@@ -78,9 +78,9 @@ it("works when you click on the left arrow", function () {
   expect(
     //will change to use toHaveClass to go along with arrow hiding refactor
     container.querySelector(".bi-arrow-left-circle")
-  ).not.toHaveStyle('visibility: hidden');
+  ).toHaveStyle('visibility: hidden');
 
-  expect(container.querySelector(".bi-arrow-right-circle")).toHaveStyle('visibility: hidden');
+  expect(container.querySelector(".bi-arrow-right-circle")).not.toHaveStyle('visibility: hidden');
 
   const rightArrow = container.querySelector(".bi-arrow-right-circle");
   fireEvent.click(rightArrow);
