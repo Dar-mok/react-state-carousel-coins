@@ -2,23 +2,21 @@ import { render, fireEvent } from "@testing-library/react";
 import Carousel from "./Carousel";
 import TEST_IMAGES from "./_testCommon.js";
 
+it("matches snapshot", function () {
+  const { container } = render(
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
+  );
+  expect(container).toMatchSnapshot();
+});
 
 it("renders without crashing", function () {
   // this is a low-value test, but better than nothing
   render(<Carousel photos={TEST_IMAGES} title="images for testing" />);
 });
 
-it("matches snapshot", function () {
-  const { container } = render(<Carousel photos={TEST_IMAGES} title="images for testing" />);
-  expect(container).toMatchSnapshot();
-});
-
 it("works when you click on the right arrow", function () {
   const { container } = render(
-    <Carousel
-      photos={TEST_IMAGES}
-      title="images for testing"
-    />
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
   );
   // expect the first image to show, but not the second
   expect(
@@ -43,10 +41,7 @@ it("works when you click on the right arrow", function () {
 
 it("works when you click on the left arrow", function () {
   const { container } = render(
-    <Carousel
-      photos={TEST_IMAGES}
-      title="images for testing"
-    />
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
   );
 
   const rightArrow = container.querySelector(".bi-arrow-right-circle");
@@ -77,32 +72,23 @@ it("works when you click on the left arrow", function () {
 
 it("works when you click on the left arrow", function () {
   const { container } = render(
-    <Carousel
-      photos={TEST_IMAGES}
-      title="images for testing"
-    />
+    <Carousel photos={TEST_IMAGES} title="images for testing" />
   );
 
   expect(
-    container.querySelector('.bi-arrow-left-circle')
-  ).not.toBeInTheDocument();
+    //will change to use toHaveClass to go along with arrow hiding refactor
+    container.querySelector(".bi-arrow-left-circle")
+  ).not.toHaveStyle('visibility: hidden');
 
-  expect(
-    container.querySelector('.bi-arrow-right-circle')
-  ).toBeInTheDocument();
+  expect(container.querySelector(".bi-arrow-right-circle")).toHaveStyle('visibility: hidden');
 
-  const rightArrow = container.querySelector('.bi-arrow-right-circle');
+  const rightArrow = container.querySelector(".bi-arrow-right-circle");
   fireEvent.click(rightArrow);
   fireEvent.click(rightArrow);
 
   expect(
-    container.querySelector('.bi-arrow-right-circle')
-  ).not.toBeInTheDocument();
+    container.querySelector(".bi-arrow-right-circle")
+  ).toHaveStyle('visibility: hidden')
 
-  expect(
-    container.querySelector('.bi-arrow-left-circle')
-  ).toBeInTheDocument();
-
-
-
+  expect(container.querySelector(".bi-arrow-left-circle")).not.toHaveStyle('visibility: hidden');
 });
